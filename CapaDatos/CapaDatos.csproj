@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CDBarbero.cs" />
+    <Compile Include="CDCita.cs" />
     <Compile Include="CDCliente.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="ConexionDB.cs" />

@@ -10,48 +10,37 @@ using System.Data.Sql;
 
 namespace CapaDatos
 {
-    class CDBarbero
+    public class CDCita
     {
-        private int dIdBarbero;
-        private String dNombre, dApellido, dTelefono, dDisponibilidad, dEstado;
+        private int dIdCita;
+        private String dFecha, dHora, dEstado, dIdCliente, dIdBarbero;
+ 
 
-        public CDBarbero() { }
-        public CDBarbero(int pIdBarbero, string pNombre, string pApellido, string pTelefono, string pDisponibilidad, string pEstado)
+        public CDCita() { }
+        public CDCita(int pIdCita, string pFecha, string pHora, string pEstado, string pIdCliente, string pIdBarbero)
         {
-            this.dIdBarbero = pIdBarbero;
-            this.dNombre = pNombre;
-            this.dApellido = pApellido;
-            this.dDisponibilidad = pDisponibilidad;
-            this.dTelefono = pTelefono;
+            this.dIdCita = pIdCita;
+            this.dFecha = pFecha;
+            this.dHora = pHora;
             this.dEstado = pEstado;
+            this.dIdCliente = pIdCliente;
+            this.dIdBarbero = pIdBarbero;
         }
-        public int IdBarbero
+        public int IdCita
         {
-            get { return dIdBarbero; }
-            set { dIdBarbero = value; }
+            get { return dIdCita; }
+            set { dIdCita = value; }
         }
-
-        public string Nombre
+        public string Fecha
         {
-            get { return dNombre; }
-            set { dNombre = value; }
-        }
-
-        public string Apellido
-        {
-            get { return dApellido; }
-            set { dApellido = value; }
+            get { return dFecha; }
+            set { dFecha = value; }
         }
 
-        public string Disponibilidad
+        public string Hora
         {
-            get { return dDisponibilidad; }
-            set { dDisponibilidad = value; }
-        }
-        public string Telefono
-        {
-            get { return dTelefono; }
-            set { dTelefono = value; }
+            get { return dHora; }
+            set { dHora = value; }
         }
 
         public string Estado
@@ -60,7 +49,19 @@ namespace CapaDatos
             set { dEstado = value; }
         }
 
-        public string Insertar(CDBarbero objBarbero)
+        public string IdCliente
+        {
+            get { return dIdCliente; }
+            set { dIdCliente = value; }
+        }
+
+        public string IdBarbero
+        {
+            get { return dIdBarbero; }
+            set { dIdBarbero = value; }
+        }
+
+        public string Insertar(CDCita objCita)
         {
             string mensaje = "";
             //creamos un nuevo objeto de tipo SqlConnection
@@ -71,18 +72,18 @@ namespace CapaDatos
                 //asignamos a sqlCon la conexión con las base de datos a traves de la clase que creamos
                 sqlCon.ConnectionString = ConexionDB.miconexion;
                 //Escribo el nombre del procedimiento almacenado que utilizaré, en este caso SuplidorInsertar
-                SqlCommand micomando = new SqlCommand("BarberoInsectar", sqlCon);
-                sqlCon.Open(); //Abro la conexión
+                SqlCommand micomando = new SqlCommand("CitaInsectar", sqlCon);
+                sqlCon.Open(); //Abro la conexióna
                                //indico que se ejecutara un procedimiento almacenado
                 micomando.CommandType = CommandType.StoredProcedure;
-                micomando.Parameters.AddWithValue("@pNombre", objBarbero.Nombre);
-                micomando.Parameters.AddWithValue("@pApellido", objBarbero.Apellido);
-                micomando.Parameters.AddWithValue("@pTelefono", objBarbero.Telefono);
-                micomando.Parameters.AddWithValue("@pDisponibilidad", objBarbero.Disponibilidad);
-                micomando.Parameters.AddWithValue("@pEstado", objBarbero.Estado);
+                micomando.Parameters.AddWithValue("@pFecha", objCita.Fecha);
+                micomando.Parameters.AddWithValue("@pHora", objCita.Hora);
+                micomando.Parameters.AddWithValue("@pEstado", objCita.Estado);
+                micomando.Parameters.AddWithValue("@pIdCliente", objCita.IdCliente);
+                micomando.Parameters.AddWithValue("@pIdBarbero", objCita.IdBarbero);
                 //Metodo Insertar
                 mensaje = micomando.ExecuteNonQuery() == 1 ? "Datos actualizados correctamente!" :
-                                                             "No se pudo actualizar correctamente los datos!";
+                                                 "No se pudo actualizar correctamente los datos!";
             }
             catch (Exception ex)
             {
@@ -94,26 +95,25 @@ namespace CapaDatos
                     sqlCon.Close();
             }
             return mensaje;
-
         }//Metodo
          //método para actualizar los datos del Suplidor. Recibirá el objeto objSuplidor como parámetro
-        public string Actualizar(CDBarbero objBarbero)
+        public string Actualizar(CDCita objCita)
         {
             string mensaje = "";
             SqlConnection sqlCon = new SqlConnection();
             try
             {
                 sqlCon.ConnectionString = ConexionDB.miconexion;
-                SqlCommand micomando = new SqlCommand("BarberoActualizar", sqlCon);
+                SqlCommand micomando = new SqlCommand("Citactualizar", sqlCon);
                 sqlCon.Open();
                 micomando.CommandType = CommandType.StoredProcedure;
-                micomando.Parameters.AddWithValue("@pNombre", objBarbero.Nombre);
-                micomando.Parameters.AddWithValue("@pApellido", objBarbero.Apellido);
-                micomando.Parameters.AddWithValue("@pTelefono", objBarbero.Telefono);
-                micomando.Parameters.AddWithValue("@pDisponibilidad", objBarbero.Disponibilidad);
-                micomando.Parameters.AddWithValue("@pEstado", objBarbero.Estado);
+                micomando.Parameters.AddWithValue("@pFecha", objCita.Fecha);
+                micomando.Parameters.AddWithValue("@pHora", objCita.Hora);
+                micomando.Parameters.AddWithValue("@pEstado", objCita.Estado);
+                micomando.Parameters.AddWithValue("@pIdCliente", objCita.IdCliente);
+                micomando.Parameters.AddWithValue("@pIdBarbero", objCita.IdBarbero);
                 mensaje = micomando.ExecuteNonQuery() == 1 ? "Datos actualizados correctamente!" :
-                 "No se pudo actualizar correctamente los datos!";
+                "No se pudo actualizar correctamente los datos!";
             }
             catch (Exception ex)
             {
@@ -126,9 +126,8 @@ namespace CapaDatos
             }
             return mensaje;
         }
-
         //Método para consultar datos filtrados de la tabla. Se recibe el valor del parámetro
-        public DataTable BarberoConsultar(String miparametro)
+        public DataTable CitaConsultar(String miparametro)
         {
             DataTable dt = new DataTable(); //Se Crea DataTable que tomará los datos de los Suplidores
             SqlDataReader leerDatos; //Creamos el DataReader
@@ -137,7 +136,7 @@ namespace CapaDatos
                 SqlCommand sqlCmd = new SqlCommand(); //Establecer el comando
                 sqlCmd.Connection = new ConexionDB().dbconexion; //Conexión que va a usar el comando
                 sqlCmd.Connection.Open(); //Se abre la conexión
-                sqlCmd.CommandText = "BarberoConsultar"; //Nombre del Proc. Almacenado a usar
+                sqlCmd.CommandText = "CitaConsultar"; //Nombre del Proc. Almacenado a usar
                 sqlCmd.CommandType = CommandType.StoredProcedure; //Se trata de un proc. almacenado
                 sqlCmd.Parameters.AddWithValue("@pvalor", miparametro); //Se pasa el valor a buscar
                 leerDatos = sqlCmd.ExecuteReader(); //Llenamos el SqlDataReader con los datos resultantes
@@ -149,8 +148,7 @@ namespace CapaDatos
                 dt = null; //Si ocurre algun error se anula el DataTable
             }
             return dt; ////Se retorna el DataTable segun lo ocurrido arriba
-        } //Fin del método MostrarConFiltro
-
+        }//Fin del método MostrarConFiltro
 
     }
 }//Fin de la clase CDCliente

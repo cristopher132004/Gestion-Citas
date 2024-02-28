@@ -13,15 +13,14 @@ namespace CapaDatos
     class CDBarbero
     {
         private int dIdBarbero;
-        private String dNombre, dApellido, dTelefono, dDisponibilidad, dEstado;
+        private String dNombre, dApellido, dTelefono, dEstado;
 
         public CDBarbero() { }
-        public CDBarbero(int pIdBarbero, string pNombre, string pApellido, string pTelefono, string pDisponibilidad, string pEstado)
+        public CDBarbero(int pIdBarbero, string pNombre, string pApellido, string pTelefono, string pEstado)
         {
             this.dIdBarbero = pIdBarbero;
             this.dNombre = pNombre;
             this.dApellido = pApellido;
-            this.dDisponibilidad = pDisponibilidad;
             this.dTelefono = pTelefono;
             this.dEstado = pEstado;
         }
@@ -43,11 +42,6 @@ namespace CapaDatos
             set { dApellido = value; }
         }
 
-        public string Disponibilidad
-        {
-            get { return dDisponibilidad; }
-            set { dDisponibilidad = value; }
-        }
         public string Telefono
         {
             get { return dTelefono; }
@@ -78,7 +72,6 @@ namespace CapaDatos
                 micomando.Parameters.AddWithValue("@pNombre", objBarbero.Nombre);
                 micomando.Parameters.AddWithValue("@pApellido", objBarbero.Apellido);
                 micomando.Parameters.AddWithValue("@pTelefono", objBarbero.Telefono);
-                micomando.Parameters.AddWithValue("@pDisponibilidad", objBarbero.Disponibilidad);
                 micomando.Parameters.AddWithValue("@pEstado", objBarbero.Estado);
                 //Metodo Insertar
                 mensaje = micomando.ExecuteNonQuery() == 1 ? "Datos actualizados correctamente!" :
@@ -110,7 +103,6 @@ namespace CapaDatos
                 micomando.Parameters.AddWithValue("@pNombre", objBarbero.Nombre);
                 micomando.Parameters.AddWithValue("@pApellido", objBarbero.Apellido);
                 micomando.Parameters.AddWithValue("@pTelefono", objBarbero.Telefono);
-                micomando.Parameters.AddWithValue("@pDisponibilidad", objBarbero.Disponibilidad);
                 micomando.Parameters.AddWithValue("@pEstado", objBarbero.Estado);
                 mensaje = micomando.ExecuteNonQuery() == 1 ? "Datos actualizados correctamente!" :
                  "No se pudo actualizar correctamente los datos!";
